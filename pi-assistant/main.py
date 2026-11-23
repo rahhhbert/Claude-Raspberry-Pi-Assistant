@@ -19,21 +19,22 @@ def claude_main():
         if user_input.strip().lower() == "exit":
             break
         
+        conversation.append({"role": "user", "content": user_input})
         
         client = anthropic.Anthropic(api_key=API_KEY)
         message = client.messages.create(
             model="claude-haiku-5-5",
             max_tokens=1024,
-            messages=[{"role": "user", "content": user_input}],
+            messages=conversation,
         )
-        conversation.append([{"role": "user", "content": user_input}])
+        
       
       
       
       # Print command. Text content changes positions based on if the model begins to think or not. This catches the text at any position.
         for i in message.content:
             if i.type == "text":
-                conversation.append([{"role": "assistant", "content": i.text}])
+                conversation.append({"role": "assistant", "content": i.text})
                 print(i.text)
             else:
              continue
