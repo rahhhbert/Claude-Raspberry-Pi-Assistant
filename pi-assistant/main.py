@@ -26,14 +26,18 @@ def claude_main():
             max_tokens=1024,
             messages=[{"role": "user", "content": user_input}],
         )
-        conversation.append([{"role": "user", "content": user_input}, message])
+        conversation.append([{"role": "user", "content": user_input}])
+      
+      
       
       # Print command. Text content changes positions based on if the model begins to think or not. This catches the text at any position.
         for i in message.content:
             if i.type == "text":
+                conversation.append([{"role": "assistant", "content": i.text}])
                 print(i.text)
             else:
              continue
+        print(conversation)
     
 if __name__ == "__main__":
     claude_main()
